@@ -1,0 +1,91 @@
+{
+  "name": "kesen",
+  "version": "1.0.0-alpha.0",
+  "description": "Kesen is an isomorphic Javascript DDP Client",
+  "author": "Miguel A. Mejias <plitex@gmail.com>",
+  "keywords": [
+    "Meteor",
+    "DDP",
+    "Client",
+    "MobX"
+  ],
+  "homepage": "https://gitlab.com/plitex/kesen-js",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/plitex/kesen-js.git"
+  },
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "lint": "tslint --project tsconfig.json --config tslint.json",
+    "pretest": "yarn lint",
+    "test": "jest --coverage --passWithNoTests",
+    "test:watch": "jest --watch --notify",
+    "build": "gulp build",
+    "dist": "gulp dist",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "npm run lint",
+      "prettier --parser typescript --write",
+      "git add"
+    ]
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/build/",
+      "/lib/",
+      "/examples/"
+    ],
+    "modulePathIgnorePatterns": [
+      "/build/",
+      "/lib/"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts, tsx}"
+    ]
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.2",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.6.0",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^4.0.2",
+    "husky": "^1.1.4",
+    "jest": "^23.6.0",
+    "lint-staged": "^8.0.5",
+    "merge2": "^1.2.0",
+    "mock-socket": "^8.0.2",
+    "prettier": "^1.7.3",
+    "ts-jest": "^23.1.4",
+    "tslint": "^5.7.0",
+    "tslint-config-prettier": "^1.5.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "typescript": "~3.3.3"
+  },
+  "dependencies": {
+    "@types/debug": "^4.1.0",
+    "@types/uuid": "^3.4.4",
+    "debug": "^4.1.0",
+    "eventemitter3": "^3.1.0",
+    "mingo": "^2.2.10",
+    "mobx": "^5.1.2",
+    "uuid": "^3.3.2"
+  }
+}

@@ -1,0 +1,24 @@
+# Some folders
+build/
+lib/
+coverage/
+node_modules/
+
+# NPM lock file
+package-lock.json
+
+# NPM and Yarn errors
+npm-debug.log*
+yarn-error.log*
+
+# Misc
+.envrc
+.env
+tmp/
+
+# Mac OSX Finder files.
+**/.DS_Store
+.DS_Store
+
+# VSCode
+.vscode/settings.json

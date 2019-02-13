@@ -1,0 +1,7 @@
+# Ignore everything
+*
+
+# But not these files...
+!lib/**/*
+!package.json
+!yarn.lock
