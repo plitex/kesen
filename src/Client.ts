@@ -32,7 +32,7 @@ export default class Client extends EventEmitter {
 
   private storage: Storage;
   private ddpConnection: DDPConnection;
-  private collections: Map<string, Collection> = new Map<string, Collection>();
+  private collections: Map<string, Collection<any>> = new Map<string, Collection<any>>();
   private methodHandles: MethodHandleMap = {};
   private subscriptionCache: SubscriptionCache = new SubscriptionCache();
   private userId: string | null = null;
@@ -166,7 +166,7 @@ export default class Client extends EventEmitter {
     };
   }
 
-  public registerCollection(collection: Collection) {
+  public registerCollection(collection: Collection<any>) {
     if (this.collections.get(collection.name)) {
       throw new Error(`A collection '${collection.name}' already exists`);
     }

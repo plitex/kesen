@@ -5,7 +5,7 @@ import Collection from '../Collection';
 describe('Without registered client', () => {
   test('Throws error if client not found', () => {
     expect(() => {
-      new Collection('my_collection'); // tslint:disable-line
+      new Collection<any>('my_collection'); // tslint:disable-line
     }).toThrow();
   });
 });
@@ -22,31 +22,31 @@ describe('With registered default client', () => {
 
   test('Throw error if name is empty', () => {
     expect(() => {
-      new Collection(''); // tslint:disable-line
+      new Collection<any>(''); // tslint:disable-line
     }).toThrow();
   });
 
   test('Registers collection', () => {
-    const collection = new Collection('my_collection');
+    const collection = new Collection<any>('my_collection');
     expect(client.registerCollection.mock.calls.length).toBe(1);
     expect(client.registerCollection.mock.calls[0][0]).toBe(collection);
   });
 
   test('Store collection name', () => {
     const name = 'my_collection';
-    const collection = new Collection(name);
+    const collection = new Collection<any>(name);
     expect(collection.name).toBe(name);
   });
 
   test('Collection is empty', () => {
     const name = 'my_collection';
-    const collection = new Collection(name);
+    const collection = new Collection<any>(name);
     expect(collection.count()).toBe(0);
   });
 
   test('Adds document', () => {
     const name = 'my_collection';
-    const collection = new Collection(name);
+    const collection = new Collection<any>(name);
     expect(collection.count()).toBe(0);
     collection.insert('1', { field1: 'value1' });
     expect(collection.count()).toBe(1);
@@ -56,7 +56,7 @@ describe('With registered default client', () => {
 
   test('Count documents', () => {
     const name = 'my_collection';
-    const collection = new Collection(name);
+    const collection = new Collection<any>(name);
     expect(collection.count()).toBe(0);
     collection.insert('1', { field1: 'value1' });
     expect(collection.count()).toBe(1);
@@ -68,7 +68,7 @@ describe('With registered default client', () => {
     const name = 'my_collection';
     const doc1 = { _id: '1', field1: 'value1' };
     const doc2 = { _id: '2', field1: 'value1' };
-    const collection = new Collection(name);
+    const collection = new Collection<any>(name);
     collection.insert(doc1._id, doc1);
     collection.insert(doc2._id, doc2);
 
@@ -83,7 +83,7 @@ describe('With registered default client', () => {
     const name = 'my_collection';
     const doc1 = { _id: '1', field1: 'value1' };
     const doc2 = { _id: '2', field1: 'value1' };
-    const collection = new Collection(name);
+    const collection = new Collection<any>(name);
     collection.insert(doc1._id, doc1);
     collection.insert(doc2._id, doc2);
 
@@ -102,7 +102,7 @@ describe('With registered default client', () => {
     const name = 'my_collection';
     const doc1 = { _id: '1', field1: 'value1' };
     const doc2 = { _id: '2', field1: 'value1' };
-    const collection = new Collection(name);
+    const collection = new Collection<any>(name);
     collection.insert(doc1._id, doc1);
     collection.insert(doc2._id, doc2);
 
@@ -117,7 +117,7 @@ describe('With registered default client', () => {
     const name = 'my_collection';
     const doc1 = { _id: '1', field1: 'value1' };
     const doc2 = { _id: '2', field1: 'value1' };
-    const collection = new Collection(name);
+    const collection = new Collection<any>(name);
     collection.insert(doc1._id, doc1);
     collection.insert(doc2._id, doc2);
 
@@ -131,7 +131,7 @@ describe('With registered default client', () => {
     const name = 'my_collection';
     const doc1 = { _id: '1', field1: 'value1' };
     const doc2 = { _id: '2', field1: 'value1' };
-    const collection = new Collection(name);
+    const collection = new Collection<any>(name);
     collection.insert(doc1._id, doc1);
     collection.insert(doc2._id, doc2);
 
@@ -142,7 +142,7 @@ describe('With registered default client', () => {
   test('Find one document without selector', () => {
     const name = 'my_collection';
     const doc1 = { _id: '1', field1: 'value1' };
-    const collection = new Collection(name);
+    const collection = new Collection<any>(name);
     collection.insert(doc1._id, doc1);
 
     expect(collection.findOne()).toEqual(doc1);
@@ -150,14 +150,14 @@ describe('With registered default client', () => {
 
   test('Find one document returns undefined if not found', () => {
     const name = 'my_collection';
-    const collection = new Collection(name);
+    const collection = new Collection<any>(name);
 
     expect(collection.findOne()).toBeUndefined();
   });
 
   test('Change throw error if document not found', () => {
     const name = 'my_collection';
-    const collection = new Collection(name);
+    const collection = new Collection<any>(name);
     expect(() => {
       collection.update('badid', { field1: 'xxx' });
     }).toThrow();
@@ -166,7 +166,7 @@ describe('With registered default client', () => {
   test('Change documents', () => {
     const name = 'my_collection';
     const doc = { _id: '1', field1: 'value1' };
-    const collection = new Collection(name);
+    const collection = new Collection<any>(name);
 
     collection.insert(doc._id, doc);
 
@@ -186,7 +186,7 @@ describe('With registered default client', () => {
   test('Removes document', () => {
     const name = 'my_collection';
     const doc = { _id: '1', field1: 'value1' };
-    const collection = new Collection(name);
+    const collection = new Collection<any>(name);
     collection.insert('1', doc);
     expect(collection.count()).toBe(1);
     collection.remove('1');
@@ -196,7 +196,7 @@ describe('With registered default client', () => {
   test('Trigger MobX Autorun', () => {
     const name = 'my_collection';
     const doc = { _id: '1', field1: 'value1' };
-    const collection = new Collection(name);
+    const collection = new Collection<any>(name);
 
     const mockFn = jest.fn().mockImplementation(() => {
       collection.find();

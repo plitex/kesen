@@ -2,7 +2,7 @@ import mingo from 'mingo';
 import { observable } from 'mobx';
 import ClientManager from './ClientManager';
 
-export default class Collection {
+export default class Collection<T> {
   public readonly name: string;
 
   private documents: any;
@@ -46,12 +46,12 @@ export default class Collection {
     return Object.keys(this.documents).length;
   }
 
-  public find(idOrSelector?: any): mingo.Cursor<any> {
+  public find(idOrSelector?: any): mingo.Cursor<T> {
     const selector = typeof idOrSelector === 'string' ? { _id: idOrSelector } : idOrSelector;
     return mingo.find(Object.values(this.documents), selector);
   }
 
-  public findOne(idOrSelector?: any) {
+  public findOne(idOrSelector?: any): T | undefined | null {
     return this.find(idOrSelector).next();
   }
 }
