@@ -1,5 +1,5 @@
 import mingo from 'mingo';
-import { observable, toJS } from 'mobx';
+import { observable } from 'mobx';
 import ClientManager from './ClientManager';
 
 export default class Collection {
@@ -46,24 +46,12 @@ export default class Collection {
     return Object.keys(this.documents).length;
   }
 
-  public find(idOrSelector?: any) {
-    if (!idOrSelector) {
-      const result = [];
-      for (const key of Object.keys(this.documents)) {
-        result.push(toJS(this.documents[key]));
-      }
-      return result;
-    } else if (typeof idOrSelector === 'string') {
-      const doc = this.documents[idOrSelector];
-      return doc ? [toJS(doc)] : [];
-    } else {
-      const r = mingo.find(Object.values(this.documents), idOrSelector).all();
-      return r.map(o => toJS(o));
-    }
+  public find(idOrSelector?: any): mingo.Cursor<any> {
+    const selector = typeof idOrSelector === 'string' ? { _id: idOrSelector } : idOrSelector;
+    return mingo.find(Object.values(this.documents), selector);
   }
 
   public findOne(idOrSelector?: any) {
-    const result = this.find(idOrSelector);
-    return result.length > 0 ? result[0] : undefined;
+    return this.find(idOrSelector).next();
   }
 }

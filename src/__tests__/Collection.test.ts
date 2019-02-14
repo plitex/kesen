@@ -72,7 +72,7 @@ describe('With registered default client', () => {
     collection.insert(doc1._id, doc1);
     collection.insert(doc2._id, doc2);
 
-    const result = collection.find();
+    const result = collection.find().all();
     expect(result).toBeTruthy();
     expect(result.length).toBe(2);
     expect(result[0]).toEqual(doc1);
@@ -87,12 +87,12 @@ describe('With registered default client', () => {
     collection.insert(doc1._id, doc1);
     collection.insert(doc2._id, doc2);
 
-    let result = collection.find(doc2._id);
+    let result = collection.find(doc2._id).all();
     expect(result).toBeTruthy();
     expect(result.length).toBe(1);
     expect(result[0]).toEqual(doc2);
 
-    result = collection.find(doc1._id);
+    result = collection.find(doc1._id).all();
     expect(result).toBeTruthy();
     expect(result.length).toBe(1);
     expect(result[0]).toEqual(doc1);
@@ -106,7 +106,7 @@ describe('With registered default client', () => {
     collection.insert(doc1._id, doc1);
     collection.insert(doc2._id, doc2);
 
-    const result = collection.find({});
+    const result = collection.find({}).all();
     expect(result).toBeTruthy();
     expect(result.length).toBe(2);
     expect(result[0]).toEqual(doc1);
@@ -121,7 +121,7 @@ describe('With registered default client', () => {
     collection.insert(doc1._id, doc1);
     collection.insert(doc2._id, doc2);
 
-    const result = collection.find({ _id: '1' });
+    const result = collection.find({ _id: '1' }).all();
     expect(result).toBeTruthy();
     expect(result.length).toBe(1);
     expect(result[0]).toEqual(doc1);
@@ -148,6 +148,13 @@ describe('With registered default client', () => {
     expect(collection.findOne()).toEqual(doc1);
   });
 
+  test('Find one document returns undefined if not found', () => {
+    const name = 'my_collection';
+    const collection = new Collection(name);
+
+    expect(collection.findOne()).toBeUndefined();
+  });
+
   test('Change throw error if document not found', () => {
     const name = 'my_collection';
     const collection = new Collection(name);
@@ -164,15 +171,15 @@ describe('With registered default client', () => {
     collection.insert(doc._id, doc);
 
     collection.update(doc._id, { field1: 'xxx' });
-    let result = collection.find(doc._id);
+    let result = collection.find(doc._id).all();
     expect(result[0]).toEqual({ _id: '1', field1: 'xxx' });
 
     collection.update(doc._id, { field2: 'yyy' });
-    result = collection.find(doc._id);
+    result = collection.find(doc._id).all();
     expect(result[0]).toEqual({ _id: '1', field1: 'xxx', field2: 'yyy' });
 
     collection.update(doc._id, {}, ['field1']);
-    result = collection.find(doc._id);
+    result = collection.find(doc._id).all();
     expect(result[0]).toEqual({ _id: '1', field2: 'yyy' });
   });
 
