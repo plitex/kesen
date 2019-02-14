@@ -21,11 +21,11 @@ export default class Collection {
     client.registerCollection(this);
   }
 
-  public add(id: string, fields: any) {
+  public insert(id: string, fields: any) {
     this.documents[id] = { _id: id, ...fields };
   }
 
-  public change(id: string, fields: any, cleared: string[] = []) {
+  public update(id: string, fields: any, cleared: string[] = []) {
     const doc = this.documents[id];
     if (!doc) {
       throw new Error('Document not found');

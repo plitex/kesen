@@ -48,9 +48,9 @@ describe('With registered default client', () => {
     const name = 'my_collection';
     const collection = new Collection(name);
     expect(collection.count()).toBe(0);
-    collection.add('1', { field1: 'value1' });
+    collection.insert('1', { field1: 'value1' });
     expect(collection.count()).toBe(1);
-    collection.add('2', { field1: 'value1' });
+    collection.insert('2', { field1: 'value1' });
     expect(collection.count()).toBe(2);
   });
 
@@ -58,9 +58,9 @@ describe('With registered default client', () => {
     const name = 'my_collection';
     const collection = new Collection(name);
     expect(collection.count()).toBe(0);
-    collection.add('1', { field1: 'value1' });
+    collection.insert('1', { field1: 'value1' });
     expect(collection.count()).toBe(1);
-    collection.add('2', { field1: 'value1' });
+    collection.insert('2', { field1: 'value1' });
     expect(collection.count()).toBe(2);
   });
 
@@ -69,8 +69,8 @@ describe('With registered default client', () => {
     const doc1 = { _id: '1', field1: 'value1' };
     const doc2 = { _id: '2', field1: 'value1' };
     const collection = new Collection(name);
-    collection.add(doc1._id, doc1);
-    collection.add(doc2._id, doc2);
+    collection.insert(doc1._id, doc1);
+    collection.insert(doc2._id, doc2);
 
     const result = collection.find();
     expect(result).toBeTruthy();
@@ -84,8 +84,8 @@ describe('With registered default client', () => {
     const doc1 = { _id: '1', field1: 'value1' };
     const doc2 = { _id: '2', field1: 'value1' };
     const collection = new Collection(name);
-    collection.add(doc1._id, doc1);
-    collection.add(doc2._id, doc2);
+    collection.insert(doc1._id, doc1);
+    collection.insert(doc2._id, doc2);
 
     let result = collection.find(doc2._id);
     expect(result).toBeTruthy();
@@ -103,8 +103,8 @@ describe('With registered default client', () => {
     const doc1 = { _id: '1', field1: 'value1' };
     const doc2 = { _id: '2', field1: 'value1' };
     const collection = new Collection(name);
-    collection.add(doc1._id, doc1);
-    collection.add(doc2._id, doc2);
+    collection.insert(doc1._id, doc1);
+    collection.insert(doc2._id, doc2);
 
     const result = collection.find({});
     expect(result).toBeTruthy();
@@ -118,8 +118,8 @@ describe('With registered default client', () => {
     const doc1 = { _id: '1', field1: 'value1' };
     const doc2 = { _id: '2', field1: 'value1' };
     const collection = new Collection(name);
-    collection.add(doc1._id, doc1);
-    collection.add(doc2._id, doc2);
+    collection.insert(doc1._id, doc1);
+    collection.insert(doc2._id, doc2);
 
     const result = collection.find({ _id: '1' });
     expect(result).toBeTruthy();
@@ -132,8 +132,8 @@ describe('With registered default client', () => {
     const doc1 = { _id: '1', field1: 'value1' };
     const doc2 = { _id: '2', field1: 'value1' };
     const collection = new Collection(name);
-    collection.add(doc1._id, doc1);
-    collection.add(doc2._id, doc2);
+    collection.insert(doc1._id, doc1);
+    collection.insert(doc2._id, doc2);
 
     expect(collection.findOne(doc2._id)).toEqual(doc2);
     expect(collection.findOne(doc1._id)).toEqual(doc1);
@@ -143,7 +143,7 @@ describe('With registered default client', () => {
     const name = 'my_collection';
     const doc1 = { _id: '1', field1: 'value1' };
     const collection = new Collection(name);
-    collection.add(doc1._id, doc1);
+    collection.insert(doc1._id, doc1);
 
     expect(collection.findOne()).toEqual(doc1);
   });
@@ -152,7 +152,7 @@ describe('With registered default client', () => {
     const name = 'my_collection';
     const collection = new Collection(name);
     expect(() => {
-      collection.change('badid', { field1: 'xxx' });
+      collection.update('badid', { field1: 'xxx' });
     }).toThrow();
   });
 
@@ -161,17 +161,17 @@ describe('With registered default client', () => {
     const doc = { _id: '1', field1: 'value1' };
     const collection = new Collection(name);
 
-    collection.add(doc._id, doc);
+    collection.insert(doc._id, doc);
 
-    collection.change(doc._id, { field1: 'xxx' });
+    collection.update(doc._id, { field1: 'xxx' });
     let result = collection.find(doc._id);
     expect(result[0]).toEqual({ _id: '1', field1: 'xxx' });
 
-    collection.change(doc._id, { field2: 'yyy' });
+    collection.update(doc._id, { field2: 'yyy' });
     result = collection.find(doc._id);
     expect(result[0]).toEqual({ _id: '1', field1: 'xxx', field2: 'yyy' });
 
-    collection.change(doc._id, {}, ['field1']);
+    collection.update(doc._id, {}, ['field1']);
     result = collection.find(doc._id);
     expect(result[0]).toEqual({ _id: '1', field2: 'yyy' });
   });
@@ -180,7 +180,7 @@ describe('With registered default client', () => {
     const name = 'my_collection';
     const doc = { _id: '1', field1: 'value1' };
     const collection = new Collection(name);
-    collection.add('1', doc);
+    collection.insert('1', doc);
     expect(collection.count()).toBe(1);
     collection.remove('1');
     expect(collection.count()).toBe(0);
@@ -197,9 +197,9 @@ describe('With registered default client', () => {
     autorun(mockFn);
 
     expect(mockFn.mock.calls.length).toBe(1);
-    collection.add('1', doc);
+    collection.insert('1', doc);
     expect(mockFn.mock.calls.length).toBe(2);
-    collection.change('1', { a: 1 });
+    collection.update('1', { a: 1 });
     expect(mockFn.mock.calls.length).toBe(3);
     collection.remove('1');
     expect(mockFn.mock.calls.length).toBe(4);

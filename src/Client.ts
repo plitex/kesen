@@ -217,7 +217,7 @@ export default class Client extends EventEmitter {
   private handleAdded({ collection, id, fields }: any) {
     const c = this.find(collection);
     if (c) {
-      c.add(id, fields);
+      c.insert(id, fields);
     }
     this.emit('documentAdded', { collection, id, fields });
   }
@@ -225,7 +225,7 @@ export default class Client extends EventEmitter {
   private handleChanged({ collection, id, fields, cleared }: any) {
     const c = this.find(collection);
     if (c) {
-      c.change(id, fields, cleared);
+      c.update(id, fields, cleared);
     }
     this.emit('documentChanged', { collection, id, fields, cleared });
   }
