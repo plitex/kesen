@@ -24,7 +24,8 @@
     "test:watch": "jest --watch --notify",
     "build": "gulp build",
     "dist": "gulp dist",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "prepublish": "yarn dist"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
