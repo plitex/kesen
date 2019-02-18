@@ -25,7 +25,7 @@
     "build": "gulp build",
     "dist": "gulp dist",
     "precommit": "lint-staged",
-    "prepublish": "yarn dist"
+    "prepare": "yarn dist"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
