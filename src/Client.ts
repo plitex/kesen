@@ -2,6 +2,7 @@ import createDebug from 'debug';
 import EventEmitter from 'eventemitter3';
 import { autorun } from 'mobx';
 import uuidv1 from 'uuid/v1';
+import ClientManager from './ClientManager';
 import Collection from './Collection';
 import DDPConnection from './DDPConnection';
 import { MethodHandle, MethodHandleMap } from './MethodHandle';
@@ -19,8 +20,6 @@ function createFingerprint(publication: string, params: any[]) {
 }
 
 export interface ClientOptions {
-  name: string;
-  endpoint: string;
   SocketConstructor?: SocketConstructorType;
   autoConnect?: boolean;
   autoReconnect?: boolean;
@@ -37,19 +36,19 @@ export default class Client extends EventEmitter {
   private subscriptionCache: SubscriptionCache = new SubscriptionCache();
   private userId: string | null = null;
 
-  constructor(options: ClientOptions) {
+  constructor(name: string, url: string, options?: ClientOptions) {
     super();
 
-    this.name = options.name;
+    this.name = name;
     this.storage = new Storage();
     this.userId = null;
 
     this.ddpConnection = new DDPConnection({
-      endpoint: options.endpoint,
-      SocketConstructor: options.SocketConstructor || WebSocket,
-      autoConnect: options.autoConnect,
-      autoReconnect: options.autoReconnect,
-      reconnectInterval: options.reconnectInterval
+      endpoint: url,
+      SocketConstructor: (options && options.SocketConstructor) || WebSocket,
+      autoConnect: options && options.autoConnect === true,
+      autoReconnect: options && options.autoReconnect === true,
+      reconnectInterval: options && options.reconnectInterval
     });
 
     this.ddpConnection.on('connected', this.handleConnected.bind(this));
@@ -60,6 +59,8 @@ export default class Client extends EventEmitter {
     this.ddpConnection.on('added', this.handleAdded.bind(this));
     this.ddpConnection.on('changed', this.handleChanged.bind(this));
     this.ddpConnection.on('removed', this.handleRemoved.bind(this));
+
+    ClientManager.registerClient(this);
   }
 
   public connect(): void {

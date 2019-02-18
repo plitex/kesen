@@ -1,21 +1,17 @@
-import createDebug from 'debug';
-import KesenClient, { ClientOptions } from './Client';
-
-const debug = createDebug('kesen:client-manager');
+import KesenClient from './Client';
 
 class ClientManager {
   private clients: Map<string, KesenClient> = new Map<string, KesenClient>();
 
-  public createClient(options: ClientOptions) {
-    const name = options.name || 'default';
-
-    debug(`Creating client ${name}`);
-
-    if (this.clients.get(name)) {
-      throw new Error(`You must set a different client name, ${name} client already exists`);
+  public registerClient(client: KesenClient) {
+    if (!client) {
+      throw Error('Client required');
     }
-    const client = new KesenClient(options);
-    this.clients.set(name, client);
+
+    if (this.clients.get(client.name)) {
+      throw new Error(`Client '${client.name}' client already exists`);
+    }
+    this.clients.set(client.name, client);
     return client;
   }
 
