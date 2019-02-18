@@ -2,6 +2,8 @@
 
 An isomorphic Javascript DDP Client
 
+NOTE: This package is work in progress and the API may change until v1 is reached, most of the features are working but it must be battle tested to be production ready.
+
 ## Install
 
 ```bash
