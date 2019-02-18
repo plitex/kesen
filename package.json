@@ -1,6 +1,6 @@
 {
   "name": "kesen",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Kesen is an isomorphic Javascript DDP Client",
   "author": "Miguel A. Mejias <plitex@gmail.com>",
   "keywords": [
