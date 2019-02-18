@@ -52,6 +52,18 @@ export default {
   ): (() => void) => {
     const client = getDefaultClient();
     return client.track(fn);
+  },
+  login: (loginParameters: any) => {
+    const client = getDefaultClient();
+    return client.login(loginParameters);
+  },
+  logout: () => {
+    const client = getDefaultClient();
+    return client.logout();
+  },
+  getUserId: () => {
+    const client = getDefaultClient();
+    return client.getUserId();
   }
 };
 
