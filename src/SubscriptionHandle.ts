@@ -10,7 +10,7 @@ export default class SubscriptionHandle extends EventEmitter {
   public readonly trackerId?: string;
 
   @observable
-  public ready = false;
+  public pReady = false;
   public queued = false;
 
   private readonly client: Client;
@@ -30,6 +30,10 @@ export default class SubscriptionHandle extends EventEmitter {
     this.fingerprint = fingerprint;
     this.id = id;
     this.trackerId = trackerId;
+  }
+
+  public ready() {
+    return this.pReady;
   }
 
   public unsubscribe() {

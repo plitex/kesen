@@ -198,7 +198,7 @@ export default class Client extends EventEmitter {
     subs.forEach((id: string) => {
       const handle = this.subscriptionCache.get(id);
       if (handle) {
-        handle.ready = true;
+        handle.pReady = true;
         handle.emit('ready');
       }
     });
@@ -208,7 +208,7 @@ export default class Client extends EventEmitter {
     if (error) {
       const handle = this.subscriptionCache.get(id);
       if (handle) {
-        handle.ready = true;
+        handle.pReady = true;
         handle.emit('error', error);
       }
     }

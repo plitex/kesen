@@ -27,7 +27,7 @@ Kesen.call('insertTask', 'Destroy asteroids').then(
 // Subscribe to reactive data
 Kesen.track(subscribe => {
   const subsHandle = subscribe('tasks');
-  if (subsHandle.ready) {
+  if (subsHandle.ready()) {
     console.log(Tasks.find().all());
   }
 });
@@ -52,7 +52,7 @@ Kesen.call('insertTask', 'Destroy asteroids').then(
 // Subscribe to reactive data
 Kesen.track(subscribe => {
   const subsHandle = subscribe('tasks');
-  if (subsHandle.ready) {
+  if (subsHandle.ready()) {
     console.log(Tasks.find().all());
   }
 });
